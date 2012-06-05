@@ -262,7 +262,9 @@ void TIM8_CC_IRQHandler(void)
 * Return         : None
 *******************************************************************************/
 void ADC3_IRQHandler(void)
-{}
+{
+  __Display_Str(100,50,0xFFFF,0,"ADC3");
+}
 
 /*******************************************************************************
 * Function Name  : FSMC_IRQHandler

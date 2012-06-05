@@ -68,8 +68,8 @@ extern u8 _vectors[];
 *******************************************************************************/
 int main(void)
 { 
-  s32 i;
-  u16 Count_FPS = 0, Second = 0;//,Offset, Result 
+  /* s32 i;
+     u16 Count_FPS = 0, Second = 0;//,Offset, Result*/ 
 //  u8 N[20];
 //  u8 T_Unit[15]={'u','S','u','S','m','S','S'};
   
@@ -78,9 +78,9 @@ int main(void)
 //Note: 用 IAR_V4.x 编译时，变更 App#n 还要同时修改 lnkarm.xcl 文件中的对应项 
 //      用 IAR_V5.x 编译时，变更 App#n 还要同时修改 xxxxxx.icf 文件中的对应项 
   
-  __USB_Init();
+  /* __USB_Init();*/
   
-  if(__Get(FPGA_OK)== 0){
+  /* if(__Get(FPGA_OK)== 0){
     __Display_Str(6*8, 30, YEL, PRN, "      FPGA configuration error       ");
     while (1){};
   }
@@ -98,7 +98,7 @@ int main(void)
     __Display_Str(6*8, 30, YEL, PRN, "     Parameter record not found       ");  
 //  i = Load_Param(); // 读取预设开机参数 
 
-  /*--------------------------- LICENCE_CTRL_DEMO --------------------------------
+*/ /*--------------------------- LICENCE_CTRL_DEMO --------------------------------
   Offset = Seek_Proj(PROJECT_ID);
   if(Offset >= 2048){                          // Project ID not found
     Offset = Seek_Blank();
@@ -135,10 +135,41 @@ int main(void)
   }
 //  --------------------------------------------------------------------------*/
   
-  Beep_mS = 500;
+  /*  Beep_mS = 500;*/
   Balance();
   App_init();
-  Key_Buffer=0;
+  
+  while(1) {
+    //    __Set(BEEP_VOLUME, 50); // Reload volume
+    //Beep_mS = 500;                                        // Beep
+    if(Key_Buffer != 0) {
+      if(Key_Buffer == KEY_P) { // Check if there is any inut
+	__Display_Str(0,0,GRN,PRN,"1");
+	Delayms(1000);
+	__Display_Str(0,0,BLACK,PRN,"1");
+      } 
+      if(Key_Buffer == KEY2) {
+	__Display_Str(0,0,GRN,PRN,"2");
+	Delayms(1000);
+	__Display_Str(0,0,BLACK,PRN,"2");
+      }
+      if(Key_Buffer == KEY3) {
+	__Display_Str(0,0,GRN,PRN,"3");
+	Delayms(1000);
+	__Display_Str(0,0,BLACK,PRN,"3");
+      } 
+      if(Key_Buffer == KEY4) {
+	__Display_Str(0,0,GRN,PRN,"4");
+	Delayms(1000);
+	__Display_Str(0,0,BLACK,PRN,"4");
+      } 
+      Key_Buffer = 0;
+    }
+    __Point_SCR(50,50);
+    __LCD_SetPixl(GRN);
+  }
+
+  /* Key_Buffer=0;
   
 //--------------------------------- 主循环 ------------------------------------- 
   while (1){
@@ -390,6 +421,6 @@ int main(void)
       Key_Buffer=0;
       Update = 1;
     }
-  }
+    }*/
 }
 /*********************************  END OF FILE  ******************************/

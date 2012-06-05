@@ -1,0 +1,24 @@
+#!/bin/bash
+# This script is to automate the process of flashing the oscilloscope
+mount -t vfat ${1} /mnt/dso/
+cp SYS_B152.hex /mnt/dso/
+sleep 1
+umount /mnt/dso
+sleep 5
+mount -t vfat ${1} /mnt/dso/
+cp app1.hex /mnt/dso/
+sleep 1
+umount /mnt/dso
+sleep 5
+mount -t vfat ${1} /mnt/dso/
+cp CFG_FPGA.ADR /mnt/dso/
+sleep 1
+umount /mnt/dso
+sleep 5
+mount -t vfat ${1} /mnt/dso/
+cp V261FPGA.BIN /mnt/dso/
+sleep 1
+umount /mnt/dso
+
+read -p "Please reset the Oscilloscope and press Enter"
+bunzip2 /home/ubuntu/Downloads/Dso.img.zip --stdout | dd of=${1}
